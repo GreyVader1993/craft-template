@@ -5,7 +5,7 @@ import { React } from 'react';
 
 export default function FormSubmission() {
     return (
-        <div>
+        <div className='bg-white h-screen'>
             <Form />
         </div>
     );

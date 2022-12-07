@@ -1,6 +1,6 @@
 import React from 'react';
 
-class JobCard extends React.Component {
+class BidsCard extends React.Component {
 
     constructor(props) {
         super(props);
@@ -19,7 +19,7 @@ class JobCard extends React.Component {
     render() {
         return (
             <div>
-                <h2 className="font-mono font-semibold text-black text-3xl text-center m-5">Recent Jobs</h2>
+                <h2 className="font-mono font-semibold text-black text-3xl text-center m-5">Jobs with Most Bids</h2>
                 <ul className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4'>                  
                     {this.state.jobs.map(job =>
                         <div className='bg-gray-900 border-2' key={job.id}>
@@ -33,4 +33,4 @@ class JobCard extends React.Component {
     }
 }
 
-export default JobCard;
+export default BidsCard;

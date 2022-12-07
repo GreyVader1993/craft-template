@@ -7,7 +7,7 @@ export default function handler(req, res) {
                 error: `Method ${req.method} not allowed`
             })
         )
-        if(!feeddata) {
+        if(!feeddata || feeddata.length === 0 || feeddata === undefined) {
             return res.status(404).json({error: 'No data found'})
         } else {
             return res.status(200).json(feeddata.sort(feeddata.date).slice(0, 10))

@@ -1,91 +1,148 @@
 //  build a form to add new job desctiption (16kb max) and submit it to the server
 
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
 class Form extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            file: null
-        };
-        this.handleSubmit = this.handleSubmit.bind(this);
-        this.handleChange = this.handleChange.bind(this);
-    }
+  constructor(props) {
+    super(props);
+    this.state = {
+        response: "",
+    };
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleResponse = this.handleResponse.bind(this);
+  }
 
-    handleSubmit(event) {
-        event.preventDefault();
-        const data = new FormData();
-        fetch('http://localhost:3000/upload', {
-            method: 'POST',
-            body: data,
-        }).then((response) => {
-            response.json().then((body) => {
-                this.props.handleResponse(body);
-            });
-        });
-    }
+  handleSubmit(event) {
+    event.preventDefault();
+    const data = new FormData();
+    fetch("http://localhost:3000/api/formsubmission", {
+      method: "POST",
+      body: data,
+    }).then((response) => {
+      response.json().then((body) => {
+        this.props.handleResponse(body);
+      });
+    });
+  }
 
-    handleChange(event) {
-        this.setState({
-            file: event.target.files[0]
-        });
-    }
+  handleResponse(body) {
+    this.setState({ response: body });
+}
 
-    render() {
-        return (
-            <form onSubmit={this.handleSubmit}>
-                <div class="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-                    <div class="w-full max-w-md space-y-8">
-                        <div>
-                            <img class="mx-auto h-12 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="Your Company" />
-                                <h2 class="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">Sign in to your account</h2>
-                                <p class="mt-2 text-center text-sm text-gray-600">
-                                    Or
-                                    <a href="#" class="font-medium text-indigo-600 hover:text-indigo-500">start your 14-day free trial</a>
-                                </p>
+  
+
+  render() {
+    return (
+      <div className="flex flex-col mx-auto justify-center">
+        <h2 className="font-mono font-semibold text-black text-3xl text-center m-5">
+          Add a Job Description
+        </h2>
+        <form onSubmit={this.handleSubmit}>
+          <div class="mt-10 sm:mt-0">
+            <div class="md:grid md:grid-cols-1 md:gap-6">
+              <div class="mt-5 md:col-span-2 md:mt-0">
+                <form action="#" method="POST">
+                  <div class="overflow-hidden shadow sm:rounded-md">
+                    <div class="bg-white px-4 py-5 sm:p-6">
+                      <div class="grid grid-cols-6 gap-6">
+                        <div class="col-span-6 sm:col-span-3">
+                          <label
+                            for="first-name"
+                            class="block text-sm font-medium text-gray-700"
+                          >
+                            First name
+                          </label>
+                          <input
+                            type="text"
+                            name="first-name"
+                            id="first-name"
+                            autocomplete="given-name"
+                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                          />
                         </div>
-                        <form class="mt-8 space-y-6" action="#" method="POST">
-                            <input type="hidden" name="remember" value="true" />
-                                <div class="-space-y-px rounded-md shadow-sm">
-                                    <div>
-                                        <label for="email-address" class="sr-only">Email address</label>
-                                        <input id="email-address" name="email" type="email" autocomplete="email" required class="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm" placeholder="Email address" />
-                                    </div>
-                                    <div>
-                                        <label for="password" class="sr-only">Password</label>
-                                        <input id="password" name="password" type="password" autocomplete="current-password" required class="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm" placeholder="Password" />
-                                    </div>
-                                </div>
 
-                                <div class="flex items-center justify-between">
-                                    <div class="flex items-center">
-                                        <input id="remember-me" name="remember-me" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
-                                            <label for="remember-me" class="ml-2 block text-sm text-gray-900">Remember me</label>
-                                    </div>
+                        <div class="col-span-6 sm:col-span-3">
+                          <label
+                            for="last-name"
+                            class="block text-sm font-medium text-gray-700"
+                          >
+                            Last name
+                          </label>
+                          <input
+                            type="text"
+                            name="last-name"
+                            id="last-name"
+                            autocomplete="family-name"
+                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                          />
+                        </div>
 
-                                    <div class="text-sm">
-                                        <a href="#" class="font-medium text-indigo-600 hover:text-indigo-500">Forgot your password?</a>
-                                    </div>
-                                </div>
+                        <div class="col-span-6 sm:col-span-4">
+                          <label
+                            for="email-address"
+                            class="block text-sm font-medium text-gray-700"
+                          >
+                            Email address
+                          </label>
+                          <input
+                            type="text"
+                            name="email-address"
+                            id="email-address"
+                            autocomplete="email"
+                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                          />
+                        </div>
+                        <br />
+                        <div class="col-span-6 sm:col-span-6 lg:col-span-2">
+                          <label
+                            for="jobtitle"
+                            class="block text-sm font-medium text-gray-700"
+                          >
+                            Job Title
+                          </label>
+                          <input
+                            type="text"
+                            name="jobtitle"
+                            id="jobtitle"
+                            autocomplete="address-level2"
+                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                          />
+                        </div>
 
-                                <div>
-                                    <button type="submit" class="group relative flex w-full justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-                                        <span class="absolute inset-y-0 left-0 flex items-center pl-3">
-                                            <svg class="h-5 w-5 text-indigo-500 group-hover:text-indigo-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                                <path fill-rule="evenodd" d="M10 1a4.5 4.5 0 00-4.5 4.5V9H5a2 2 0 00-2 2v6a2 2 0 002 2h10a2 2 0 002-2v-6a2 2 0 00-2-2h-.5V5.5A4.5 4.5 0 0010 1zm3 8V5.5a3 3 0 10-6 0V9h6z" clip-rule="evenodd" />
-                                            </svg>
-                                        </span>
-                                        Sign in
-                                    </button>
-                                </div>
-                        </form>
+                        <div class="col-span-6">
+                          <label
+                            for="street-address"
+                            class="block text-sm font-medium text-gray-700"
+                          >
+                            Job Description
+                          </label>
+                          <textarea
+                            type="textarea"
+                            name="jobdescription"
+                            id="jobdescription"
+                            autocomplete="street-address"
+                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                          />
+                        </div>
+                      </div>
                     </div>
-                </div>
-                <input type="file" onChange={this.handleChange} />
-                <button type="submit">Upload</button>
-            </form>
-        );
-    }
+                    <div class="bg-gray-50 px-4 py-3 text-right sm:px-6">
+                      <button
+                        type="submit"
+                        class="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                      >
+                        Submit
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    );
+  }
 }
 
 export default Form;
